@@ -1,8 +1,9 @@
 #display {
-    text-align: center;
+    text-align: left;
     background-color: black;
     color: rgb(0, 255, 0);
     width: 480px;
-    padding: 10px 48px;
+    height: 100px;
+    padding: auto;
     margin-bottom: 24px;
 }
