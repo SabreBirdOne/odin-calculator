@@ -40,8 +40,6 @@ function clearDisplay(display){
 //      numberB = null.
 
 //      
-
-
 let calculator = {
     // represenation invariant: 
     //      numberA, numberB are positive number. 
@@ -70,7 +68,20 @@ let calculator = {
         if (this.numberA === null){
             this.numberA = +str;
         }
-    }
+    },
+
+    idToFunction: {
+        "addButton": add,
+        "minusButton": subtract,
+        "multiplyButton": multiply,
+        "divideButton": divide,
+    },
+    changeOperator: function(str){
+        if (this.numberA !== null){
+            this.operator = this.idToFunction[str];
+        }
+        
+    },
 }
 
 const display = document.querySelector("#display"); 
@@ -93,14 +104,12 @@ clearButton.addEventListener("click", () => {
     calculator.clear()
 })
 
-const addButton = document.querySelector("#addButton");
-const minusButton = document.querySelector("#minusButton");
-const multiplyButton = document.querySelector("#multiplyButton");
-const divideButton = document.querySelector("#divideButton");
+const operatorButtons = [...document.querySelectorAll(".operatorButton")];
 
-
-for(operatorButton of [addButton, minusButton, multiplyButton, divideButton]){
-    operatorButton.addEventListener("click", () => {
+for(operatorButton of operatorButtons){
+    let operatorButtonId = operatorButton.id;
+    operatorButton.addEventListener("click", (e) => {
         calculator.parseNumberA(display.textContent);
+        calculator.changeOperator(operatorButtonId);
     })
 }
