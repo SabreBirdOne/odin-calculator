@@ -34,12 +34,10 @@ function clearDisplay(display){
 //      else if numberA is filled and numberB is null (picking the operator)
 //          calculator parses the operator as calculator.operator
 //      
-//      
-
 //      When user enters the "=" button:
 //      if numberA, numberB and operator are all filled, then operate() on them.
-//      then pass the result to display.textContent.
-//      then assign the result to numberA.
+//      then pass the result to display.textContent and numberA.
+//      numberB = null.
 
 //      
 
@@ -61,10 +59,17 @@ let calculator = {
     numberA: null,
     numberB: null,
     operator: null,
+
     clear: function(){
         this.numberA = null;
         this.numberB = null;
         this.operator = null;
+    },
+    
+    parseNumberA: function(str){
+        if (this.numberA === null){
+            this.numberA = +str;
+        }
     }
 }
 
@@ -87,3 +92,15 @@ clearButton.addEventListener("click", () => {
     clearDisplay(display);
     calculator.clear()
 })
+
+const addButton = document.querySelector("#addButton");
+const minusButton = document.querySelector("#minusButton");
+const multiplyButton = document.querySelector("#multiplyButton");
+const divideButton = document.querySelector("#divideButton");
+
+
+for(operatorButton of [addButton, minusButton, multiplyButton, divideButton]){
+    operatorButton.addEventListener("click", () => {
+        calculator.parseNumberA(display.textContent);
+    })
+}
