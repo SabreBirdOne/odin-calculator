@@ -75,7 +75,7 @@ numberButtons.sort((buttonA, buttonB) => buttonA.id.charAt(-1) - buttonB.id.char
 
 for(let i = 0; i < numberButtons.length; i++){
     numberButtons[i].addEventListener("click", () => {
-        if (calculator.numberA !== null){
+        if (calculator.numberA !== null && calculator.operator !== null){
             clearDisplay(display);
         }
         display.textContent += `${i}`;
