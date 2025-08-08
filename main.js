@@ -146,15 +146,23 @@ let calculator = {
 }
 
 const display = document.querySelector("#display"); 
+let displayingResult = false;
 
 const numberButtons = [...document.querySelectorAll(".numberButton")];
 numberButtons.sort((buttonA, buttonB) => buttonA.id.charAt(-1) - buttonB.id.charAt(-1));
 
 for(let i = 0; i < numberButtons.length; i++){
     numberButtons[i].addEventListener("click", () => {
-        if (calculator.numberA !== null && calculator.operator !== null && !calculator.readyForB){
+        if (calculator.numberA !== null &&
+            calculator.operator !== null && 
+            !calculator.readyForB
+        ){
             clearDisplay(display);
             calculator.readyForB = true;
+        }
+        if (displayingResult) {
+            clearDisplay(display);
+            displayingResult = false;
         }
         display.textContent += `${i}`;
     });
@@ -183,4 +191,5 @@ operateButton.addEventListener("click", (e) => {
     clearDisplay(display);
     display.textContent = calculator.calculate();
     calculator.clear() // clear the calculator data when pressing =, this won't be called when chaining operations.
+    displayingResult = true;
 })
