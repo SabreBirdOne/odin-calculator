@@ -1,0 +1,24 @@
+This project is quite the send off for the foundations course. Heartfelt thank you to everyone at 
+THE ODIN PROJECT for putting all this together. 
+
+It made me remember all the stuff I learned in Principles of Software back in RPI. 
+Especially pertaining to object oriented programming. 
+
+Using representation invariants was a key move to success.
+Actually, I haven't turned logging on to check if it's still held in my last commit, oh well.
+
+The project itself reminds me of all the CPU simulation code we had to build in Computer Organization, 
+not a big fan of building logic flow charts / pseudocode.
+
+Took me around 4,5,6 hours? Everything specified is met so I'm sure I'm done with this project. 
+Something tells me this project isn't over. I'll appreciate any code reviews. 
+
+Extra Credit? 
+
+I don't know if I want to do extra credits right now, I'm so tired.
+
+Well I just read the extra credits section. My representation invariant won't need changing. 
+Floating point numbers and backspace features only seem to affect the display div element, so 
+the parsing won't need changes (yes, I wrote my object with floats in mind).
+
+Keyboard support? I just have to add event listeners for the keys. Functions will be the same. 
