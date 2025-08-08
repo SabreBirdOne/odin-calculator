@@ -89,6 +89,13 @@ let calculator = {
             console.log(`calculator.checkRepInvariant: ${this.checkRepInvariant()}`); 
         }  
     },
+
+    isCleared: function(){
+        return this.numberA === null &&
+            this.numberB === null &&
+            this.operator === null &&
+            this.readyForB === false;
+    },
     
     parseNumberA: function(str){
         if (this.numberA === null && str){
@@ -116,7 +123,7 @@ let calculator = {
     },
 
     changeOperator: function(str){
-        if (this.numberA !== null){
+        if (this.numberA !== null && this.numberB === null){
             this.operator = this.idToFunction[str];
         }
         if (this.LOGGING) {
@@ -165,8 +172,8 @@ for(operatorButton of operatorButtons){
     let operatorButtonId = operatorButton.id;
     operatorButton.addEventListener("click", (e) => {
         calculator.parseNumberA(display.textContent);
-        calculator.changeOperator(operatorButtonId);
         calculator.parseNumberB(display.textContent);
+        calculator.changeOperator(operatorButtonId);
     })
 }
 
@@ -175,4 +182,5 @@ operateButton.addEventListener("click", (e) => {
     calculator.parseNumberB(display.textContent);
     clearDisplay(display);
     display.textContent = calculator.calculate();
+    calculator.clear() // clear the calculator data when pressing =, this won't be called when chaining operations.
 })
