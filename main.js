@@ -22,8 +22,6 @@ function clearDisplay(display){
     display.textContent = '';
 }
 
-
-
 // Abstraction: 
 
 //      user enters a number with digit pad into display.textContent.
@@ -131,8 +129,12 @@ let calculator = {
         }  
     },
 
+    enoughOperands: function() {
+        return this.numberA !== null && this.numberB !== null && this.operator !== null;
+    },
+
     calculate: function(){
-        if (this.numberA !== null && this.numberB !== null && this.operator !== null){
+        if (this.enoughOperands()){
             const result = operate(this.operator, this.numberA, this.numberB);
             if (result === undefined){
                 this.clear();
@@ -182,6 +184,15 @@ for(operatorButton of operatorButtons){
         calculator.parseNumberA(display.textContent);
         calculator.parseNumberB(display.textContent);
         calculator.changeOperator(operatorButtonId);
+
+        if (calculator.enoughOperands()){
+            clearDisplay(display);
+            display.textContent = calculator.calculate();
+            calculator.clear();
+            calculator.parseNumberA(display.textContent);
+            calculator.changeOperator(operatorButtonId);
+        }
+        
     })
 }
 
