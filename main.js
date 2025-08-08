@@ -39,12 +39,13 @@ function clearDisplay(display){
 //      then pass the result to display.textContent and numberA.
 //      numberB = null.
 
-//      
+//      readyForB --> numberB is Null
 let calculator = {
     // represenation invariant: 
     //      numberA, numberB are positive number. 
     //      operator is function objects: add, subtract, multiply, divide, or null value
     //      readyForB is a boolean indicating calculator is ready for numberB.
+    //      if readyForB is false, numberB must be null.
 
     //      States:
     //          null everything: = does nothing. +-*/ parses non-empty display.textContent into numberA and changes calculator.operator
@@ -54,29 +55,57 @@ let calculator = {
     //              = sends operate() result to display.textContent
     //              +-*/ sends operate() result to numberA, and nulls calculator.operator
 
-
+    LOGGING: true,
     numberA: null,
     numberB: null,
     operator: null,
     readyForB: false,
+
+    checkRepInvariant: function(){
+        let repInvariantHeld = 
+            (typeof this.numberA === "number" || this.numberA === null) &&
+            (typeof this.numberB === "number" || this.numberB === null) &&
+            ([add, subtract, multiply, divide, null].includes(this.operator)) &&
+            (typeof this.readyForB === "boolean");
+        
+        if (typeof this.numberA === "number"){
+            repInvariantHeld = repInvariantHeld && this.numberA > 0;
+        }
+        if (typeof this.numberB === "number"){
+            repInvariantHeld = repInvariantHeld && this.numberB > 0;
+        } 
+        if (!this.readyForB){
+            repInvariantHeld = repInvariantHeld && (this.numberB === null); 
+        }
+        return repInvariantHeld;
+    },
 
     clear: function(){
         this.numberA = null;
         this.numberB = null;
         this.operator = null;
         this.readyForB = false;
+        if (this.LOGGING) {
+            console.log(`calculator.checkRepInvariant: ${this.checkRepInvariant()}`); 
+        }  
     },
     
     parseNumberA: function(str){
         if (this.numberA === null){
             this.numberA = +str;
         }
+        if (this.LOGGING) {
+            console.log(`calculator.checkRepInvariant: ${this.checkRepInvariant()}`); 
+        }  
     },
 
     parseNumberB: function(str){
-        if (this.numberB === null){
+        if (this.numberB === null && this.readyForB){
             this.numberB = +str;
         }
+        if (this.LOGGING) {
+            console.log(`calculator.checkRepInvariant: ${this.checkRepInvariant()}`); 
+        }  
     },
 
     idToFunction: {
@@ -90,6 +119,9 @@ let calculator = {
         if (this.numberA !== null){
             this.operator = this.idToFunction[str];
         }
+        if (this.LOGGING) {
+            console.log(`calculator.checkRepInvariant: ${this.checkRepInvariant()}`); 
+        }  
     },
 
     calculate: function(){
@@ -133,6 +165,7 @@ for(operatorButton of operatorButtons){
     operatorButton.addEventListener("click", (e) => {
         calculator.parseNumberA(display.textContent);
         calculator.changeOperator(operatorButtonId);
+        calculator.parseNumberB(display.textContent);
     })
 }
 
