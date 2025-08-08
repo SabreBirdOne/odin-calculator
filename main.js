@@ -55,7 +55,7 @@ let calculator = {
     //              = sends operate() result to display.textContent
     //              +-*/ sends operate() result to numberA, and nulls calculator.operator
 
-    LOGGING: true,
+    LOGGING: false,
     numberA: null,
     numberB: null,
     operator: null,
@@ -91,7 +91,7 @@ let calculator = {
     },
     
     parseNumberA: function(str){
-        if (this.numberA === null){
+        if (this.numberA === null && str){
             this.numberA = +str;
         }
         if (this.LOGGING) {
@@ -100,7 +100,7 @@ let calculator = {
     },
 
     parseNumberB: function(str){
-        if (this.numberB === null && this.readyForB){
+        if (this.numberB === null && str && this.readyForB){
             this.numberB = +str;
         }
         if (this.LOGGING) {
@@ -129,11 +129,12 @@ let calculator = {
             const result = operate(this.operator, this.numberA, this.numberB);
             if (result === undefined){
                 this.clear();
-                return "Undefined result, clearing calculator.";
+                return "Undefined result, calculator cleared.";
             }
             return result;
         } 
-        return "Not enough operands"
+        this.clear();
+        return "Not enough operands, calculator cleared.";
     }
 }
 
@@ -171,5 +172,7 @@ for(operatorButton of operatorButtons){
 
 const operateButton = document.querySelector("#operateButton");
 operateButton.addEventListener("click", (e) => {
-    console.log(e.target);
+    calculator.parseNumberB(display.textContent);
+    clearDisplay(display);
+    display.textContent = calculator.calculate();
 })
