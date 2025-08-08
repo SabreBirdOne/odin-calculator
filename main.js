@@ -117,3 +117,8 @@ for(operatorButton of operatorButtons){
         calculator.changeOperator(operatorButtonId);
     })
 }
+
+const operateButton = document.querySelector("#operateButton");
+operateButton.addEventListener("click", (e) => {
+    console.log(e.target);
+})
