@@ -73,6 +73,12 @@ let calculator = {
         }
     },
 
+    parseNumberB: function(str){
+        if (this.numberB === null){
+            this.numberB = +str;
+        }
+    },
+
     idToFunction: {
         "addButton": add,
         "minusButton": subtract,
