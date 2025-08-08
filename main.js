@@ -44,6 +44,7 @@ let calculator = {
     // represenation invariant: 
     //      numberA, numberB are positive number. 
     //      operator is function objects: add, subtract, multiply, divide, or null value
+    //      readyForB is a boolean indicating calculator is ready for numberB.
 
     //      States:
     //          null everything: = does nothing. +-*/ parses non-empty display.textContent into numberA and changes calculator.operator
@@ -57,11 +58,13 @@ let calculator = {
     numberA: null,
     numberB: null,
     operator: null,
+    readyForB: false,
 
     clear: function(){
         this.numberA = null;
         this.numberB = null;
         this.operator = null;
+        this.readyForB = false;
     },
     
     parseNumberA: function(str){
@@ -76,11 +79,11 @@ let calculator = {
         "multiplyButton": multiply,
         "divideButton": divide,
     },
+
     changeOperator: function(str){
         if (this.numberA !== null){
             this.operator = this.idToFunction[str];
         }
-        
     },
 }
 
@@ -91,8 +94,9 @@ numberButtons.sort((buttonA, buttonB) => buttonA.id.charAt(-1) - buttonB.id.char
 
 for(let i = 0; i < numberButtons.length; i++){
     numberButtons[i].addEventListener("click", () => {
-        if (calculator.numberA !== null && calculator.operator !== null){
+        if (calculator.numberA !== null && calculator.operator !== null && !calculator.readyForB){
             clearDisplay(display);
+            calculator.readyForB = true;
         }
         display.textContent += `${i}`;
     });
