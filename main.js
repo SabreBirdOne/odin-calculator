@@ -22,36 +22,13 @@ function clearDisplay(display){
     display.textContent = '';
 }
 
-// Abstraction: 
 
-//      user enters a number with digit pad into display.textContent.
-//      When user enters an operator: "+", "-", "*", "/":
-//      
-//      if numberA is null: 
-//          calculator parses display.textContent as numberA
-//      else if numberA is filled and numberB is null (picking the operator)
-//          calculator parses the operator as calculator.operator
-//      
-//      When user enters the "=" button:
-//      if numberA, numberB and operator are all filled, then operate() on them.
-//      then pass the result to display.textContent and numberA.
-//      numberB = null.
-
-//      readyForB --> numberB is Null
 let calculator = {
     // represenation invariant: 
     //      numberA, numberB are positive number. 
     //      operator is function objects: add, subtract, multiply, divide, or null value
     //      readyForB is a boolean indicating calculator is ready for numberB.
     //      if readyForB is false, numberB must be null.
-
-    //      States:
-    //          null everything: = does nothing. +-*/ parses non-empty display.textContent into numberA and changes calculator.operator
-    //          numberA is filled but not numberB: = does nothing. +-*/ changes calculator.operator
-    //          if numberA and operator are filled, and a digit button is pressed, clearDisplay() (display.textContent), and fill it with the digit just pressed.
-    //          numberA and numberB is filled: 
-    //              = sends operate() result to display.textContent
-    //              +-*/ sends operate() result to numberA, and nulls calculator.operator
 
     LOGGING: false,
     numberA: null,
@@ -201,6 +178,6 @@ operateButton.addEventListener("click", (e) => {
     calculator.parseNumberB(display.textContent);
     clearDisplay(display);
     display.textContent = calculator.calculate();
-    calculator.clear() // clear the calculator data when pressing =, this won't be called when chaining operations.
+    calculator.clear()
     displayingResult = true;
 })
