@@ -85,6 +85,18 @@ let calculator = {
             this.operator = this.idToFunction[str];
         }
     },
+
+    calculate: function(){
+        if (this.numberA !== null && this.numberB !== null && this.operator !== null){
+            const result = operate(this.operator, this.numberA, this.numberB);
+            if (result === undefined){
+                this.clear();
+                return "Undefined result, clearing calculator.";
+            }
+            return result;
+        } 
+        return "Not enough operands"
+    }
 }
 
 const display = document.querySelector("#display"); 
